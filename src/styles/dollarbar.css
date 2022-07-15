@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;0,800;0,900;1,900&display=swap');
+* {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+h2 {
+    padding: 0 20px;
+    font-style: italic;
+    font-weight: black;
+}
+
+#contain {
+    text-align: center;
+}
+.container-container-dolar{
+    margin-top: 100px;
+    max-width: 250px;
+    margin: 146px auto;
+    
+}
+.container-dolar {
+    margin: 4px 0px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+.container-dolar-casa {
+    display: flex;
+    
+    overflow: hidden;
+    
+}
+.container-dolar div p {
+    margin: 0px 12px;
+    
+}
+.container-dolar .container-dolar-casa .venta {
+    width: 50%;
+    background-color: rgb(145, 197, 145);
+    border-radius: 0 0 7px 0;
+}
+.container-dolar .container-dolar-casa .compra {
+    width: 50%;
+    background-color: rgb(255, 131, 131);
+    border-radius: 0 0 0 7px;
+}
+.container-dolar .container-dolar-casa .compra .label {
+    font-weight: 900;
+}
+.container-dolar .container-dolar-casa .venta .label {
+    font-weight: 900;
+}
