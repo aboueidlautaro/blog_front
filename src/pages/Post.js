@@ -70,7 +70,7 @@ function Post() {
 
   const deletePost = (id) => {
     axios
-      .delete(`http://localhost:3001/posts/${id}`, {
+      .delete(`https://blog-jwt.herokuapp.com/posts/${id}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
@@ -82,7 +82,7 @@ function Post() {
     if (option === "title") {
       let newTitle = prompt("Ingresa el nuevo título:");
       axios.put(
-        "http://localhost:3001/posts/title",
+        "https://blog-jwt.herokuapp.com/posts/title",
         {
           newTitle: newTitle,
           id: id,
@@ -96,7 +96,7 @@ function Post() {
     } else {
       let newPostText = prompt("Ingresa el nuevo preview:");
       axios.put(
-        "http://localhost:3001/posts/postText",
+        "https://blog-jwt.herokuapp.com/posts/postText",
         {
           newText: newPostText,
           id: id,
