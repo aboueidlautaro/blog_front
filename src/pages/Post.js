@@ -81,30 +81,38 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Ingresa el nuevo título:");
-      axios.put(
-        "https://blog-jwt.herokuapp.com/posts/title",
-        {
-          newTitle: newTitle,
-          id: id,
-        },
-        {
-          headers: { accessToken: localStorage.getItem("accessToken") },
-        }
-      );
+      if (newTitle === "") {
+        newTitle = "Introduzca un título";
+      } else {
+        axios.put(
+          "https://blog-jwt.herokuapp.com/posts/title",
+          {
+            newTitle: newTitle,
+            id: id,
+          },
+          {
+            headers: { accessToken: localStorage.getItem("accessToken") },
+          }
+        );
+      }
 
       setPostObject({ ...postObject, title: newTitle });
     } else {
       let newPostText = prompt("Ingresa el nuevo preview:");
-      axios.put(
-        "https://blog-jwt.herokuapp.com/posts/postText",
-        {
-          newText: newPostText,
-          id: id,
-        },
-        {
-          headers: { accessToken: localStorage.getItem("accessToken") },
-        }
-      );
+      if (newPostText === "") {
+        newPostText = "Introduzca un texto";
+      } else {
+        axios.put(
+          "https://blog-jwt.herokuapp.com/posts/postText",
+          {
+            newText: newPostText,
+            id: id,
+          },
+          {
+            headers: { accessToken: localStorage.getItem("accessToken") },
+          }
+        );
+      }
 
       setPostObject({ ...postObject, postText: newPostText });
     }
