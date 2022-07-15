@@ -14,18 +14,22 @@ function Post() {
   const { authState } = useContext(AuthContext);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-      setPostObject(response.data);
-    });
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
-      setComments(response.data);
-    });
+    axios
+      .get(`https://blog-jwt.herokuapp.com/posts/byId/${id}`)
+      .then((response) => {
+        setPostObject(response.data);
+      });
+    axios
+      .get(`https://blog-jwt.herokuapp.com/comments/${id}`)
+      .then((response) => {
+        setComments(response.data);
+      });
   }, []);
 
   const addComment = () => {
     axios
       .post(
-        "http://localhost:3001/comments",
+        "https://blog-jwt.herokuapp.com/comments",
         {
           commentBody: newComment,
           PostId: id,
@@ -52,13 +56,13 @@ function Post() {
 
   const deleteComment = (id) => {
     axios
-      .delete(`http://localhost:3001/comments/${id}`, {
+      .delete(`https://blog-jwt.herokuapp.com/comments/${id}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
         setComments(
           comments.filter((val) => {
-            return val.id != id;
+            return val.id !== id;
           })
         );
       });

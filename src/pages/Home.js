@@ -17,7 +17,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/posts", {
+      .get("https://blog-jwt.herokuapp.com/posts", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

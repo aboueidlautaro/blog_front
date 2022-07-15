@@ -10,9 +10,11 @@ const CapaRequireAuth = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/auth/basicinfo/${id}`).then((response) => {
-      setUsername(response.username);
-    });
+    axios
+      .get(`https://blog-jwt.herokuapp.com/auth/basicinfo/${id}`)
+      .then((response) => {
+        setUsername(response.username);
+      });
   }, []);
 
   if (!username) {

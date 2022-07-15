@@ -1,15 +1,6 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Navigate,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
-import { useContext } from "react";
-
-import { Outlet, useParams } from "react-router-dom";
 
 import Home from "./pages/Home";
 
@@ -28,7 +19,6 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const [username, setUsername] = useState("");
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -37,7 +27,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("https://blog-jwt.herokuapp.com/auth/auth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
