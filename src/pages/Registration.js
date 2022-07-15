@@ -16,9 +16,11 @@ function Registration() {
     password: Yup.string().min(4).max(20).required(),
   });
 
+  const mensajeError = "";
+
   const onSubmit = (data) => {
     axios.post("https://blog-jwt.herokuapp.com/auth", data).then(() => {
-      console.log(data);
+      const mensajeError = "Cuenta creada con éxito.";
     });
   };
 
@@ -58,7 +60,7 @@ function Registration() {
               name="password"
               placeholder="Ingresa una contraseña"
             />
-
+            <p>{mensajeError}</p>
             <button type="submit">Registrarme</button>
           </Form>
         </div>
