@@ -58,7 +58,7 @@ function Home() {
               return (
                 <div key={key} className="column post">
                   <div className="title"> {value.title} </div>
-                  <img src={portada} alt={portada} />
+
                   <div
                     className="body phrase-short"
                     onClick={() => {
