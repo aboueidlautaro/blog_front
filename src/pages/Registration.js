@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -11,17 +11,33 @@ function Registration() {
   };
 
   const validationSchema = Yup.object().shape({
-    autor: Yup.string().min(3).max(50).required(),
-    username: Yup.string().min(3).max(15).required(),
-    password: Yup.string().min(4).max(20).required(),
+    autor: Yup.string()
+      .min(4, "El nombre debe contener 4 caracteres como minimo")
+      .max(50)
+      .required("El nombre es obligatorio"),
+    username: Yup.string()
+      .min(4, "El usuario debe contener 4 caracteres como minimo")
+      .max(15)
+      .required("Ingrese un usuario correcto"),
+    password: Yup.string()
+      .min(8, "La contraseña debe contener 8 caracteres como mínimo")
+      .max(20)
+      .matches(
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+        "Debe contener una mayúscula, una minúcula, un número y un caracter especial."
+      )
+      .required("Introduzca una contraseña"),
   });
 
-  const mensajeError = "";
-
   const onSubmit = (data) => {
-    axios.post("https://blog-jwt.herokuapp.com/auth", data).then(() => {
-      const mensajeError = "Cuenta creada con éxito.";
-    });
+    axios
+      .post("https://blog-jwt.herokuapp.com/auth", data)
+      .then(() => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
@@ -32,9 +48,13 @@ function Registration() {
         validationSchema={validationSchema}
       >
         <div id="container-form">
-          <Form className="formContainer">
+          <Form id="formContainer" className="formContainer">
             <label>Nombre completo: </label>
-            <ErrorMessage name="autor" component="span" />
+            <ErrorMessage
+              className="errorMessage"
+              name="autor"
+              component="span"
+            />
             <Field
               autoComplete="off"
               id="inputCreatePost"
@@ -43,7 +63,11 @@ function Registration() {
             />
 
             <label>Usuario: </label>
-            <ErrorMessage name="username" component="span" />
+            <ErrorMessage
+              className="errorMessage"
+              name="username"
+              component="span"
+            />
             <Field
               autoComplete="off"
               id="inputCreatePost"
@@ -52,7 +76,11 @@ function Registration() {
             />
 
             <label>Contraseña: </label>
-            <ErrorMessage name="password" component="span" />
+            <ErrorMessage
+              className="errorMessage"
+              name="password"
+              component="span"
+            />
             <Field
               autoComplete="off"
               type="password"
@@ -60,7 +88,7 @@ function Registration() {
               name="password"
               placeholder="Ingresa una contraseña"
             />
-            <p>{mensajeError}</p>
+
             <button type="submit">Registrarme</button>
           </Form>
         </div>

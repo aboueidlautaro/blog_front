@@ -6,7 +6,7 @@ import { AuthContext } from "./AuthContext";
 
 const CapaRequireAuth = () => {
   let { id } = useParams();
-  const { authState } = useContext(AuthContext);
+
   const [username, setUsername] = useState("");
 
   useEffect(() => {

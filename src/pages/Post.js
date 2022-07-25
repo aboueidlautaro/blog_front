@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Routes, Navigate, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../helpers/AuthContext";
@@ -46,6 +46,7 @@ function Post() {
         } else {
           const commentToAdd = {
             commentBody: newComment,
+            autor: response.data.autor,
             username: response.data.username,
           };
           setComments([...comments, commentToAdd]);
@@ -81,38 +82,30 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Ingresa el nuevo título:");
-      if (newTitle === "") {
-        newTitle = "Introduzca un título";
-      } else {
-        axios.put(
-          "https://blog-jwt.herokuapp.com/posts/title",
-          {
-            newTitle: newTitle,
-            id: id,
-          },
-          {
-            headers: { accessToken: localStorage.getItem("accessToken") },
-          }
-        );
-      }
+      axios.put(
+        "https://blog-jwt.herokuapp.com/posts/title",
+        {
+          newTitle: newTitle,
+          id: id,
+        },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      );
 
       setPostObject({ ...postObject, title: newTitle });
     } else {
       let newPostText = prompt("Ingresa el nuevo preview:");
-      if (newPostText === "") {
-        newPostText = "Introduzca un texto";
-      } else {
-        axios.put(
-          "https://blog-jwt.herokuapp.com/posts/postText",
-          {
-            newText: newPostText,
-            id: id,
-          },
-          {
-            headers: { accessToken: localStorage.getItem("accessToken") },
-          }
-        );
-      }
+      axios.put(
+        "https://blog-jwt.herokuapp.com/posts/postText",
+        {
+          newText: newPostText,
+          id: id,
+        },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      );
 
       setPostObject({ ...postObject, postText: newPostText });
     }
@@ -122,7 +115,6 @@ function Post() {
     <div className="postPage">
       <div className="leftSide">
         <div className="post " id="individual">
-          <p>{postObject.autor}</p>
           <div
             className="title"
             onClick={() => {
@@ -133,6 +125,7 @@ function Post() {
           >
             {postObject.title}
           </div>
+          <p>Por {postObject.autor}</p>
           <div
             className="body "
             onClick={() => {

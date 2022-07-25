@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../helpers/AuthContext";
+
 import portada from "../static/image/estadio.jpeg";
 
 import "../App.css";
@@ -12,7 +11,7 @@ import DollarBar from "../components/DollarBar";
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [search, setSearch] = useState("");
-  const { authState } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +21,6 @@ function Home() {
       })
       .then((response) => {
         setListOfPosts(response.data.listOfPosts);
-        console.log(response.data.listOfPosts);
       });
   }, []);
 
@@ -57,8 +55,8 @@ function Home() {
             {results.map((value, key) => {
               return (
                 <div key={key} className="column post">
+                  <img src={portada} alt={portada} />
                   <div className="title"> {value.title} </div>
-
                   <div
                     className="body phrase-short"
                     onClick={() => {
@@ -69,7 +67,9 @@ function Home() {
                   </div>
                   <div className="footer">
                     <div className="username">
-                      <Link to={`/profile/${value.UserId}`}>{value.autor}</Link>
+                      <Link to={`/profile/${value.UserId}`}>
+                        Por {value.autor}
+                      </Link>
                     </div>
                   </div>
                 </div>

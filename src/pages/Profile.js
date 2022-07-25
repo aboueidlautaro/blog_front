@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 import { AuthContext } from "../helpers/AuthContext";
 import "../App.css";
+import "moment/locale/es";
 
 function Profile() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [autor, setAutor] = useState("");
   const [listOfPosts, setListOfPosts] = useState([]);
   const { authState } = useContext(AuthContext);
 
@@ -16,6 +19,7 @@ function Profile() {
       .get(`https://blog-jwt.herokuapp.com/auth/basicinfo/${id}`)
       .then((response) => {
         setUsername(response.data.username);
+        setAutor(response.data.autor);
       });
 
     axios
@@ -29,9 +33,15 @@ function Profile() {
     <div className="profilePageContainer">
       <div className="basicInfo">
         {" "}
-        <h1>
-          Viendo cuenta: <span> {username}.</span>
-        </h1>
+        <div className="organizedInfo">
+          <p>
+            Visualizando: <span> {autor}.</span>
+          </p>
+          <p>
+            Registrado como:
+            <span> {username}.</span>
+          </p>
+        </div>
         {authState.username === username && (
           <button
             onClick={() => {
@@ -58,7 +68,7 @@ function Profile() {
                 {value.postText}
               </div>
               <div className="footer">
-                <div className="username">{value.username}</div>
+                <p>{moment(value.createdAt).format("LL")}</p>
               </div>
             </div>
           );

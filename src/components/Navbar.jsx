@@ -1,16 +1,16 @@
 import "../App.css";
-import { Route, NavLink, Navigate, Routes } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
-import { AuthContext } from "../helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Navbar = () => {
   const [authState, setAuthState] = useState({
     username: "",
+    autor: "",
     id: 0,
     status: false,
   });
@@ -28,6 +28,7 @@ const Navbar = () => {
         } else {
           setAuthState({
             username: response.data.username,
+            autor: response.data.autor,
             id: response.data.id,
             status: true,
           });
@@ -41,36 +42,66 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar">
-      <div className="links">
-        {!authState.status ? (
-          <>
-            <span id="logo">INFSA</span>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/login">Iniciar sesión</NavLink>
-            <NavLink to="/registration">Registrarse</NavLink>
-          </>
-        ) : (
-          <>
-            <span>INFSA</span>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/createpost">Crear publicación</NavLink>
-          </>
-        )}
-      </div>
-
-      {authState.status ? (
-        <div className="loggedInContainer">
-          <NavLink to={"/profile/" + authState.id} className="titleUserNavbar">
-            {authState.username}
-            <FontAwesomeIcon className="iconoFontAwesome" icon={faCaretDown} />
-          </NavLink>
-          <button onClick={logout}>Cerrar sesión</button>
+    <>
+      <div className="navbar-main">
+        <div className="navbar2">
+          <div className="links2 width-box-navbar-items">
+            {!authState.status ? (
+              <>
+                <div className="menubar2">
+                  <div className="">
+                    <NavLink to="/">Home</NavLink>
+                  </div>
+                  <div className="">
+                    <span id="logo2">INFSA</span>
+                  </div>
+                  <div className="">
+                    <NavLink to="/login">Iniciar sesión</NavLink>
+                    <NavLink to="/registration">Registrarse</NavLink>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="menubar width-box-navbar-items">
+                  <NavLink className="btnActionsBar" to="/">
+                    Home
+                  </NavLink>
+                  <NavLink to="/createpost">Publicar</NavLink>
+                </div>
+              </>
+            )}
+          </div>
+          {authState.status ? (
+            <div className="width-box-navbar-items">
+              <span id="logo2">INFSA</span>
+            </div>
+          ) : (
+            <></>
+          )}
+          {authState.status ? (
+            <div className="loggedInContainer2 width-box-navbar-items">
+              <NavLink
+                to={"/profile/" + authState.id}
+                className="titleUserNavbar2"
+              >
+                <span>
+                  {authState.autor}
+                  <FontAwesomeIcon
+                    className="iconoFontAwesome"
+                    icon={faCaretDown}
+                  />
+                </span>
+                <small>{authState.username}</small>
+              </NavLink>
+              <button onClick={logout}>Cerrar sesión</button>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
-      ) : (
-        <></>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 export default Navbar;
